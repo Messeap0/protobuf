@@ -58,7 +58,7 @@ jobs:
         if: ${{ !matrix.continuous-only || inputs.continuous-run }}
         uses: protocolbuffers/protobuf-ci/ccache@v3
         with:
-          cache-prefix: objectivec_${{ matrix.platform }}_${{ matrix.xc_config }}
+          cache-prefix: objectivec_${{ matrix.platform }}_${{ matrix.xc_config }}_bazel7
           support-modules: true
 
       - name: Run tests
@@ -111,8 +111,9 @@ jobs:
         if: ${{ !matrix.continuous-only || inputs.continuous-run }}
         uses: protocolbuffers/protobuf-ci/bazel@v3
         with:
+          version: 7.1.2 # Bazel version
           credentials: ${{ secrets.GAR_SERVICE_ACCOUNT }}
-          bazel-cache: cocoapods/${{ matrix.XCODE }}
+          bazel-cache: cocoapods/${{ matrix.XCODE }}-bazel7
           bash: |
             ./regenerate_stale_files.sh $BAZEL_FLAGS --xcode_version="${{ matrix.XCODE }}"
             pod lib lint --verbose \
@@ -158,6 +159,7 @@ jobs:
         if: ${{ !matrix.config.continuous-only || inputs.continuous-run }}
         uses: protocolbuffers/protobuf-ci/bazel@v3
         with:
+          version: 7.1.2 # Bazel version
           credentials: ${{ secrets.GAR_SERVICE_ACCOUNT }}
           bazel: ${{ matrix.config.bazel_action }} ${{ matrix.config.flags }} ${{ matrix.bazel_targets }}
-          bazel-cache: objc_${{ matrix.platform }}_${{ matrix.config.name }}
+          bazel-cache: objc_${{ matrix.platform }}_${{ matrix.config.name }}-bazel7

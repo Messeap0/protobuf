@@ -86,6 +86,13 @@ def build_targets(name):
             ): ["-Wl,-undefined,dynamic_lookup"],
             "//conditions:default": [],
         }),
+        linkopts = selects.with_or({
+            (
+                "//python/dist:osx_x86_64",
+                "//python/dist:osx_aarch64",
+            ): ["-Wl,-undefined,dynamic_lookup"],
+            "//conditions:default": [],
+        }),
         linkshared = 1,
         linkstatic = 1,
         tags = [
@@ -119,6 +126,13 @@ def build_targets(name):
         ] + select({
             "//conditions:default": [],
             ":allow_oversize_protos": ["-DPROTOBUF_PYTHON_ALLOW_OVERSIZE_PROTOS=1"],
+        }),
+        linkopts = selects.with_or({
+            (
+                "//python/dist:osx_x86_64",
+                "//python/dist:osx_aarch64",
+            ): ["-Wl,-undefined,dynamic_lookup"],
+            "//conditions:default": [],
         }),
         linkopts = selects.with_or({
             (

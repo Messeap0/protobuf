@@ -7,3 +7,6 @@ build --copt="-Werror" --copt="-Wno-sign-compare" --copt="-Wno-sign-conversion" 
 common --repo_env=BAZEL_NO_APPLE_CPP_TOOLCHAIN=1
 common --xcode_version_config=@com_google_protobuf//.github:host_xcodes
 
+build --apple_crosstool_top=@local_config_apple_cc//:toolchain
+build --crosstool_top=@local_config_apple_cc//:toolchain
+build --host_crosstool_top=@local_config_apple_cc//:toolchain
